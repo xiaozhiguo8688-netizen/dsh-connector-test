@@ -1,0 +1,25 @@
+name: smoke
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  hello:
+    runs-on: ubuntu-latest
+    steps:
+      - name: greet
+        run: |
+          echo "hello from the DSH GitHub connector"
+          uname -a
+      - name: make artifact
+        run: echo "artifact built at $(date -u)" > result.txt
+      - name: upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: smoke-result
+          path: result.txt
